@@ -1,0 +1,4 @@
+P09PartialResultsTest: 3 tests, 0 failures
+  ✔ bad rows are reported · good rows still succeed
+  ✔ large import · keeps input order · with concurrency
+  ✔ without per element handling · one bad row kills everything

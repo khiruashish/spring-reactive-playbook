@@ -1,0 +1,4 @@
+P10OrderSagaTest: 3 tests, 0 failures
+  ✔ courier fails · refunds then releases · in reverse order
+  ✔ happy path · no compensation
+  ✔ payment fails · releases stock · and surfaces the original error

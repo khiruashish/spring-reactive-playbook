@@ -1,0 +1,4 @@
+P08JobPollerTest: 3 tests, 0 failures
+  ✔ job failure · stops polling immediately
+  ✔ never finishes · times out at the deadline
+  ✔ polls with backoff · until done · then fetches result

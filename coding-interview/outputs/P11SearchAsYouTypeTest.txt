@@ -1,0 +1,3 @@
+P11SearchAsYouTypeTest: 2 tests, 0 failures
+  ✔ debounces · cancels stale search · and skips duplicates
+  ✔ short queries · never hit the backend

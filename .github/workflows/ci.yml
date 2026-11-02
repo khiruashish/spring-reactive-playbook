@@ -20,6 +20,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Build and test (examples + food delivery services)
         run: ./gradlew build --no-daemon
+      - name: Coding-interview test reports match the docs
+        working-directory: coding-interview
+        run: python3 report.py --check
 
   docs:
     runs-on: ubuntu-latest

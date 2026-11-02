@@ -1,0 +1,5 @@
+P03BlockingBridgeTest: 4 tests, 0 failures
+  ✔ blocking call · runs on the dedicated pool · not the caller
+  ✔ from callable · is lazy · nothing runs until subscribe
+  ✔ many concurrent calls · do not serialise
+  ✔ mono just · blocks the caller at assembly time

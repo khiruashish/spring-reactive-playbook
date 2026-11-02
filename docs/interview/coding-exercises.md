@@ -98,3 +98,8 @@ The audit log is never written. Why, and how do you fix it?
 
     `audit.apply(saved)` returns a `Mono` that nobody subscribes to. Side effects that are themselves
     reactive must be part of the chain (`flatMap`/`then`), never created inside `doOnNext`.
+
+!!! tip "Twelve more, WebFlux-heavy"
+    Functional endpoints, WebClient fan-out, blocking bridges, backpressure policies, batching, hot feeds, Context,
+    polling, partial results, sagas, search-as-you-type and a hand-written circuit breaker are in the
+    [Coding Interview](../coding-interview/index.md) tab, each with its own test class.

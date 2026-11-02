@@ -1,0 +1,4 @@
+P06PriceFeedTest: 3 tests, 0 failures
+  ✔ filter per symbol · and completion reaches subscribers
+  ✔ late subscriber · gets last three · then live ticks
+  ✔ many subscribers · share one upstream · and receive the same ticks
