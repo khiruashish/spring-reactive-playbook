@@ -1,9 +1,41 @@
 ---
+title: Home
 hide:
   - navigation
 ---
 
-# Spring Reactive Playbook
+<div class="pb-hero" markdown>
+<div markdown>
+
+<span class="pb-kicker">Java 21 · Spring Boot 4.1 · Project Reactor 3.8</span>
+
+<h1>Spring Reactive Playbook</h1>
+
+<p class="pb-lead">Reactive programming with <b>Project Reactor</b>, <b>Spring WebFlux</b> and Spring Boot 4, from the Reactive Streams spec to a production food-delivery microservice. Every example is real, tested code.</p>
+
+[Start with the roadmap](roadmap/index.md){ .md-button .md-button--primary }
+[Project Reactor](reactor/index.md){ .md-button }
+[Food Delivery App](food-delivery/index.md){ .md-button }
+
+</div>
+<div class="pb-stack" aria-hidden="true">
+<div class="pb-stack-plane">
+<div class="pb-layer l-cpu">Non-blocking I/O<small>epoll · Netty channels</small></div>
+<div class="pb-layer l-car">Reactor Netty event loop<small>a few threads, many connections</small></div>
+<div class="pb-layer l-fjp">Project Reactor operators<small>map · flatMap · backpressure</small></div>
+<div class="pb-layer l-vt">Your handlers<small>Mono · Flux · WebFlux</small></div>
+</div>
+<div class="pb-stack-legend">How a few event-loop threads serve<br>thousands of concurrent requests</div>
+</div>
+</div>
+
+<div class="pb-stats">
+<div class="pb-stat"><b>98</b><span>pages</span></div>
+<div class="pb-stat"><b>12</b><span>sections</span></div>
+<div class="pb-stat"><b>18</b><span>diagrams</span></div>
+<div class="pb-stat"><b>93</b><span>Java source files</span></div>
+</div>
+
 
 A complete, hands-on guide to **reactive programming with Spring** — from the Reactive Streams
 specification to production microservices — built on **Java 21+** and **Spring Boot 4.1.2**
