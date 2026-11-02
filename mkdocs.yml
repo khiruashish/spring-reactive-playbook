@@ -1,0 +1,204 @@
+site_name: Spring Reactive Playbook
+site_description: Reactive programming with Project Reactor, Spring WebFlux and Spring Boot 4 — every topic explained with tested examples, finishing with a microservice food delivery app.
+site_author: Spring Reactive Playbook
+repo_name: spring-reactive-webapp
+copyright: Examples are compiled and tested on Java 21 · Spring Boot 4.1.2
+
+theme:
+  name: material
+  language: en
+  icon:
+    logo: material/lightning-bolt
+    repo: fontawesome/brands/github
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle: { icon: material/brightness-auto, name: Switch to light mode }
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: teal
+      toggle: { icon: material/weather-sunny, name: Switch to dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: teal
+      toggle: { icon: material/weather-night, name: Switch to system preference }
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true        # build fails if an embedded example file/section disappears
+      dedent_subsections: true # strip the method-body indentation from embedded sections
+
+nav:
+  - Home:
+      - index.md
+      - Getting Started: getting-started.md
+      - Master Prompt: master-prompt.md
+      - Quick Learning Path: learning-path.md
+  - Roadmap:
+      - roadmap/index.md
+      - "Level 1 · Foundation (0–2 yrs)": roadmap/level-1-foundation.md
+      - "Level 2 · Practitioner (2–5 yrs)": roadmap/level-2-practitioner.md
+      - "Level 3 · Senior (5–8 yrs)": roadmap/level-3-senior.md
+      - "Level 4 · Lead (8–12 yrs)": roadmap/level-4-lead.md
+      - "Level 5 · Architect (12–15+ yrs)": roadmap/level-5-architect.md
+  - Fundamentals:
+      - fundamentals/index.md
+      - Why Reactive?: fundamentals/why-reactive.md
+      - Reactive Manifesto: fundamentals/reactive-manifesto.md
+      - Reactive Streams Spec: fundamentals/reactive-streams.md
+      - Backpressure: fundamentals/backpressure.md
+      - Reactive vs Virtual Threads: fundamentals/reactive-vs-virtual-threads.md
+  - Project Reactor:
+      - reactor/index.md
+      - Mono & Flux: reactor/mono-and-flux.md
+      - Creating Sequences: reactor/creating-sequences.md
+      - Transforming: reactor/transforming.md
+      - Filtering: reactor/filtering.md
+      - Combining: reactor/combining.md
+      - Error Handling: reactor/error-handling.md
+      - Time Operators: reactor/time-operators.md
+      - Schedulers & Threading: reactor/schedulers.md
+      - Hot vs Cold & Sinks: reactor/hot-vs-cold-and-sinks.md
+      - Backpressure & Batching: reactor/backpressure-and-batching.md
+      - Context: reactor/context.md
+      - Resources & Cancellation: reactor/resources-and-cancellation.md
+      - Debugging: reactor/debugging.md
+      - Operator Cheat Sheet: reactor/operator-cheatsheet.md
+      - Advanced Internals & Interop: reactor/advanced-internals.md
+  - Spring WebFlux:
+      - webflux/index.md
+      - Architecture: webflux/architecture.md
+      - Project Setup: webflux/project-setup.md
+      - Annotated Controllers: webflux/annotated-controllers.md
+      - Functional Endpoints: webflux/functional-endpoints.md
+      - Error Handling: webflux/error-handling.md
+      - Filters: webflux/filters.md
+      - WebClient: webflux/webclient.md
+      - HTTP Interface Clients: webflux/http-interface-clients.md
+      - Streaming & SSE: webflux/streaming-sse.md
+      - WebSocket: webflux/websocket.md
+      - Codecs, CORS & Config: webflux/codecs-cors-config.md
+      - Files & DataBuffers: webflux/files-and-databuffers.md
+      - GraphQL: webflux/graphql.md
+      - Reactor Netty: webflux/reactor-netty.md
+  - Reactive Data:
+      - data/index.md
+      - R2DBC: data/r2dbc.md
+      - Reactive MongoDB: data/mongodb.md
+      - Reactive Redis: data/redis.md
+      - Reactive Transactions: data/transactions.md
+      - Other Stores, Caching & Sessions: data/other-stores-and-caching.md
+  - Security:
+      - security/index.md
+      - WebFlux Security: security/webflux-security.md
+      - OAuth2 & JWT: security/oauth2-jwt.md
+      - Method Security: security/method-security.md
+  - Messaging:
+      - messaging/index.md
+      - Kafka: messaging/kafka.md
+      - RSocket: messaging/rsocket.md
+      - Spring Cloud Gateway: messaging/gateway.md
+      - Spring Cloud Stream: messaging/cloud-stream.md
+      - Streaming AI Responses: messaging/ai-streaming.md
+  - Resilience:
+      - resilience/index.md
+      - Resilience Patterns: resilience/resilience-patterns.md
+      - Observability: resilience/observability.md
+  - Testing:
+      - testing/index.md
+      - StepVerifier: testing/stepverifier.md
+      - WebTestClient: testing/webtestclient.md
+      - Integration Tests: testing/integration-testing.md
+      - BlockHound: testing/blockhound.md
+  - Production:
+      - production/index.md
+      - Performance Tuning: production/performance-tuning.md
+      - Best Practices & Anti-patterns: production/best-practices.md
+      - Migrating from MVC: production/migrating-from-mvc.md
+      - Kotlin Coroutines: production/kotlin-coroutines.md
+      - Scheduling & Lifecycle: production/scheduling-and-lifecycle.md
+      - Containers, Kubernetes & Native: production/deployment.md
+  - Interview:
+      - interview/index.md
+      - "Beginner (0–2 yrs)": interview/beginner.md
+      - "Intermediate (2–5 yrs)": interview/intermediate.md
+      - "Senior (5–8 yrs)": interview/senior.md
+      - "Lead (8–12 yrs)": interview/lead.md
+      - "Architect (12–15+ yrs)": interview/architect.md
+      - Coding Exercises: interview/coding-exercises.md
+      - What Does This Print?: interview/tricky-questions.md
+      - System Design: interview/system-design.md
+  - Food Delivery App:
+      - food-delivery/index.md
+      - Run It: food-delivery/running.md
+      - API Gateway: food-delivery/api-gateway.md
+      - Restaurant Service: food-delivery/restaurant-service.md
+      - Order Service: food-delivery/order-service.md
+      - Payment Service: food-delivery/payment-service.md
+      - Delivery Service: food-delivery/delivery-service.md
+      - Notification Service: food-delivery/notification-service.md
+      - End-to-End Flow: food-delivery/end-to-end-flow.md
+      - Testing the App: food-delivery/testing.md
+      - Production Hardening: food-delivery/production-hardening.md

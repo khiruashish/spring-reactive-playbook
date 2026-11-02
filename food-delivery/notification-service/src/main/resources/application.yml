@@ -1,0 +1,14 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      auto-offset-reset: latest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

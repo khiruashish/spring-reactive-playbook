@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reactive Food Delivery</title>
+<style>
+  :root { --bg:#f7f7f8; --card:#fff; --ink:#1d1d1f; --muted:#6e6e73; --accent:#e4572e; --ok:#2e8540; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --card:#1c1c1e; --ink:#f2f2f7; --muted:#a1a1a6; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:16px; background:var(--accent); color:#fff; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:18px; margin:0; flex:1; }
+  main { display:grid; gap:16px; padding:16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  section { background:var(--card); border-radius:12px; padding:16px; }
+  h2 { font-size:16px; margin:0 0 12px; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:6px 12px; cursor:pointer; }
+  button.secondary { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  input { padding:6px 8px; border-radius:8px; border:1px solid #ccc; }
+  li { margin:6px 0; list-style:none; display:flex; justify-content:space-between; gap:8px; align-items:center; }
+  ul { padding:0; margin:0; }
+  .muted { color:var(--muted); font-size:13px; }
+  .status { font-weight:600; color:var(--ok); }
+  #log li { display:block; border-left:3px solid var(--accent); padding-left:8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🍲 Reactive Food Delivery</h1>
+  <input id="user" value="alice" aria-label="username">
+  <button id="login">Sign in</button>
+  <span id="who" class="muted" style="color:#fff"></span>
+</header>
+<main>
+  <section><h2>Restaurants</h2><ul id="restaurants"></ul></section>
+  <section><h2>Menu</h2><ul id="menu"><li class="muted">Pick a restaurant</li></ul></section>
+  <section>
+    <h2>Cart</h2><ul id="cart"></ul>
+    <p>Total: <strong id="total">₹0.00</strong></p>
+    <input id="address" value="221B MG Road, Bengaluru" style="width:100%" aria-label="address"><br><br>
+    <button id="place">Place order</button>
+  </section>
+  <section>
+    <h2>Live tracking <span id="orderStatus" class="status"></span></h2>
+    <p id="position" class="muted">No active order</p>
+    <ul id="log"></ul>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const rupees = p => '₹' + (p / 100).toFixed(2);
+let token = null, restaurantId = null, cart = new Map(), menu = new Map();
+
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  if (token) headers.Authorization = 'Bearer ' + token;
+  const res = await fetch(path, { ...opts, headers });
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
+  return res.json();
+}
+
+document.getElementById('login').onclick = async () => {
+  const r = await api('/auth/token', { method: 'POST', body: JSON.stringify({ username: $('user').value }) });
+  token = r.accessToken; $('who').textContent = 'signed in as ' + $('user').value;
+};
+
+async function loadRestaurants() {
+  const list = await api('/api/restaurants');
+  $('restaurants').innerHTML = '';
+  list.forEach(r => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${r.name}<br><span class="muted">${r.cuisine} · ${r.address}</span></span>`;
+    const b = document.createElement('button'); b.className = 'secondary'; b.textContent = 'Menu';
+    b.onclick = () => loadMenu(r.id); li.append(b); $('restaurants').append(li);
+  });
+}
+
+async function loadMenu(id) {
+  restaurantId = id; cart.clear(); renderCart();
+  const items = await api(`/api/restaurants/${id}/menu`);
+  menuEl().innerHTML = '';
+  items.forEach(m => {
+    menu.set(m.id, m);
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${m.name}<br><span class="muted">${rupees(m.pricePaise)}</span></span>`;
+    const b = document.createElement('button'); b.textContent = 'Add';
+    b.onclick = () => { cart.set(m.id, (cart.get(m.id) || 0) + 1); renderCart(); };
+    li.append(b); menuEl().append(li);
+  });
+}
+const menuEl = () => document.getElementById('menu');
+
+function renderCart() {
+  cartEl().innerHTML = ''; let total = 0;
+  cart.forEach((q, id) => {
+    const m = menu.get(id); total += m.pricePaise * q;
+    const li = document.createElement('li'); li.textContent = `${q} × ${m.name} — ${rupees(m.pricePaise * q)}`;
+    cartEl().append(li);
+  });
+  document.getElementById('total').textContent = rupees(total);
+}
+const cartEl = () => document.getElementById('cart');
+
+document.getElementById('place').onclick = async () => {
+  if (!token) return alert('Sign in first');
+  if (!cart.size) return alert('Cart is empty');
+  const body = { restaurantId, deliveryAddress: $('address').value,
+                 items: [...cart].map(([menuItemId, quantity]) => ({ menuItemId, quantity })) };
+  try {
+    const order = await api('/api/orders', { method: 'POST', body: JSON.stringify(body),
+                                             headers: { 'Idempotency-Key': crypto.randomUUID() } });
+    track(order);
+  } catch (e) { alert(e.message); }
+};
+
+function track(order) {
+  $('log').innerHTML = ''; $('orderStatus').textContent = order.status;
+  $('position').textContent = `Order #${order.id} · ${rupees(order.totalPaise)}`;
+  // 1) SSE: order status + courier coordinates
+  const es = new EventSource(`/api/orders/${order.id}/status-stream?access_token=${token}`);
+  es.addEventListener('status', ev => {
+    const u = JSON.parse(ev.data); $('orderStatus').textContent = u.status;
+    if (u.latitude != null) $('position').textContent = `Courier at ${u.latitude.toFixed(4)}, ${u.longitude.toFixed(4)}`;
+    if (u.status === 'DELIVERED' || u.status === 'PAYMENT_FAILED') es.close();
+  });
+  // 2) WebSocket: human-readable notifications
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  const ws = new WebSocket(`${proto}://${location.host}/ws/notifications?orderId=${order.id}&access_token=${token}`);
+  ws.onmessage = ev => {
+    const n = JSON.parse(ev.data); const li = document.createElement('li');
+    li.innerHTML = `${n.message} <span class="muted">${new Date(n.at).toLocaleTimeString()}</span>`;
+    $('log').prepend(li); if (n.type === 'DELIVERED') ws.close();
+  };
+}
+
+loadRestaurants().catch(e => $('restaurants').innerHTML = `<li class="muted">${e.message}</li>`);
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: restaurant-service
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST:localhost}:5432/restaurant_db
+    username: ${DB_USER:food}
+    password: ${DB_PASSWORD:food}
+    pool:
+      initial-size: 5
+      max-size: 20
+  sql:
+    init:
+      mode: always   # runs schema.sql + data.sql through R2DBC at startup (demo only; use Flyway/Liquibase in prod)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

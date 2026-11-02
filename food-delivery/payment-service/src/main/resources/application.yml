@@ -1,0 +1,17 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: payment-service
+  webflux:
+    problemdetails:
+      enabled: true
+payment:
+  latency: 150ms
+  failure-rate: ${PAYMENT_FAILURE_RATE:0.1}
+  limit-paise: 500000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

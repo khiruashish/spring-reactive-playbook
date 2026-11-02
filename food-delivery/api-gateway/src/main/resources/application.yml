@@ -1,0 +1,49 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin
+          routes:
+            - id: restaurants
+              uri: ${RESTAURANT_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/restaurants/**,/api/menu-items/**
+              filters:
+                # GETs are idempotent → safe to retry on 502/503
+                - name: Retry
+                  args:
+                    retries: 2
+                    methods: GET
+                    statuses: BAD_GATEWAY,SERVICE_UNAVAILABLE
+            - id: orders
+              uri: ${ORDER_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/orders/**
+            - id: deliveries
+              uri: ${DELIVERY_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/deliveries/**
+            - id: notifications-sse
+              uri: ${NOTIFICATION_URL:http://localhost:8084}
+              predicates:
+                - Path=/api/notifications/**
+            - id: notifications-ws
+              uri: ${NOTIFICATION_WS_URL:ws://localhost:8084}
+              predicates:
+                - Path=/ws/notifications
+app:
+  jwt:
+    # 256-bit HS256 dev secret — override with APP_JWT_SECRET; never commit a real one
+    secret: ${APP_JWT_SECRET:change-me-dev-only-secret-0123456789abcdef}
+    ttl: 8h
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,gateway

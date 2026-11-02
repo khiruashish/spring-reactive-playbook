@@ -1,0 +1,31 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: order-service
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST:localhost}:5432/order_db
+    username: ${DB_USER:food}
+    password: ${DB_PASSWORD:food}
+  sql:
+    init:
+      mode: always
+  webflux:
+    problemdetails:
+      enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+    consumer:
+      auto-offset-reset: earliest
+clients:
+  restaurant-url: ${RESTAURANT_URL:http://localhost:8081}
+  payment-url: ${PAYMENT_URL:http://localhost:8085}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

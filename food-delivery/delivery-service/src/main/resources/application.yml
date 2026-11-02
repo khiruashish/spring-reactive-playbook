@@ -1,0 +1,23 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: delivery-service
+  mongodb:
+    uri: ${MONGO_URI:mongodb://localhost:27017/delivery_db}
+  data:
+    mongodb:
+      auto-index-creation: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+simulation:
+  tick: 2s
+  steps: 10
+  couriers: [courier-ravi, courier-meera, courier-arjun, courier-sana]
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
