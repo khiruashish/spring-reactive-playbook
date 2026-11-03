@@ -1,0 +1,7 @@
+:root {
+  --md-code-font-size: 0.82em;
+}
+.md-typeset .grid.cards > ul > li { border-radius: 10px; }
+.md-typeset table:not([class]) th { white-space: nowrap; }
+.md-typeset .tested::before { content: "✓ tested "; color: var(--md-accent-fg-color); font-weight: 700; }
+.md-typeset .mermaid { text-align: center; }
