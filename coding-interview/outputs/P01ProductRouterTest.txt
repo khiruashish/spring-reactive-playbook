@@ -1,0 +1,5 @@
+P01ProductRouterTest: 4 tests, 0 failures
+  ✔ create · returns201 · with location
+  ✔ invalid body · returns400 · with every violation
+  ✔ missing product · returns404 · problem detail
+  ✔ round trip · create get delete

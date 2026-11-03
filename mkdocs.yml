@@ -191,6 +191,21 @@ nav:
       - Coding Exercises: interview/coding-exercises.md
       - What Does This Print?: interview/tricky-questions.md
       - System Design: interview/system-design.md
+  - Coding Interview:
+      - coding-interview/index.md
+      - "1. Functional Endpoints: CRUD with Validation": coding-interview/01-functional-endpoints.md
+      - "2. WebClient Fan-Out with Partial Fallbacks": coding-interview/02-webclient-fan-out.md
+      - "3. Calling Blocking Code from WebFlux": coding-interview/03-blocking-bridge.md
+      - "4. Backpressure: Buffer, Drop or Keep Latest": coding-interview/04-backpressure.md
+      - "5. Batch Writes by Size or Time": coding-interview/05-batching.md
+      - "6. Hot Price Feed with Replay for Late Subscribers": coding-interview/06-hot-feed-replay.md
+      - "7. Propagating Tenant Id with Reactor Context": coding-interview/07-reactor-context.md
+      - "8. Poll a Job Until Done (Backoff + Deadline)": coding-interview/08-poll-until-done.md
+      - "9. Partial Results: Don't Let One Bad Row Kill the Import": coding-interview/09-partial-results.md
+      - "10. Reactive Saga with Compensation": coding-interview/10-reactive-saga.md
+      - "11. Search-as-You-Type with switchMap": coding-interview/11-search-as-you-type.md
+      - "12. Write a Reactive Circuit Breaker Operator": coding-interview/12-reactive-circuit-breaker.md
+
   - Food Delivery App:
       - food-delivery/index.md
       - Run It: food-delivery/running.md

@@ -1,0 +1,5 @@
+P12CircuitBreakerTest: 4 tests, 0 failures
+  ✔ half open trial · failure · reopens immediately
+  ✔ half open trial · success · closes the circuit
+  ✔ opens after threshold · and stops calling the dependency
+  ✔ success resets the failure count

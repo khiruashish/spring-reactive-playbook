@@ -1,0 +1,3 @@
+P05BatcherTest: 2 tests, 0 failures
+  ✔ burst flushes by size · trickle flushes by time
+  ✔ one batch in flight at atime · preserves order

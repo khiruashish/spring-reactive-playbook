@@ -1,0 +1,5 @@
+P04BackpressureTest: 4 tests, 0 failures
+  ✔ bounded buffer · keeps newest10 · drops oldest
+  ✔ drop · delivers only what was requested
+  ✔ latest · keeps only the most recent value
+  ✔ limit rate · requests in batches · never unbounded

@@ -1,0 +1,5 @@
+P07TenantContextTest: 4 tests, 0 failures
+  ✔ context reaches deep operators · even across thread hops
+  ✔ downstream call · receives tenant header
+  ✔ inner write overrides outer · for its subtree only
+  ✔ placement matters · context only flows upstream

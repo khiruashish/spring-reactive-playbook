@@ -1,0 +1,4 @@
+P02ProfileAggregatorTest: 3 tests, 0 failures
+  ✔ all healthy · returns full profile · in parallel
+  ✔ required service failure · fails the whole profile
+  ✔ slow and failing optional services · degrade gracefully
